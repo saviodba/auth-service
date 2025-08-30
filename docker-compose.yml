@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "7000:7000"
+    env_file:
+      - .env
+    command: npm run dev
