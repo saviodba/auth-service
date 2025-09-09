@@ -1,9 +1,5 @@
 PORT=
 JWT_SECRET=
-DBHOST = 
-DBUSER = 
-DBPASSWORD = 
-DBDATABASE = 
 URL_FRONTEND = 
-DATABASE_URL=
+DATABASE_URL="mysql://root:password@127.0.0.1:3306/nome_do_banco"
 
