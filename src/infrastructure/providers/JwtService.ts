@@ -1,17 +1,27 @@
 // src/infrastructure/services/JwtService.ts
+import { AppError } from "@/core/errors/AppError";
 import { ITokenService } from "@/domain/repositories/ICryptoService";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
 
 export class JwtService implements ITokenService {
-  generateToken(payload: object, expiresIn:string): string {
-    return jwt.sign(payload, process.env.JWT_SECRET || "secret", {
-      expiresIn,
-    });
+  private readonly jwtSecret: Secret;
+  constructor() {
+    this.jwtSecret = process.env.JWT_SECRET || "secret";
+  }
+
+  generateToken(payload: object, expiresIn:number | string | any): string {
+    const options: SignOptions = { expiresIn };
+    return jwt.sign(payload, this.jwtSecret, options);
 
     
   }
 
-  verifyToken(token: string): any {
-    return jwt.verify(token, process.env.JWT_SECRET || "secret");
+  verifyToken(token: string): JwtPayload | string | null {
+    try {
+      return jwt.verify(token, this.jwtSecret);
+    } catch (error) {
+      console.error("Erro ao verificar token JWT: ", error);
+      throw new AppError("Token inválido ou expirado", 401);
+    }
   }
 }

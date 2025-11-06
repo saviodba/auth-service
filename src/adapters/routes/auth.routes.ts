@@ -7,13 +7,13 @@ const router = Router();
 const authController = makeAuthController()
 
 router.post("/auth", async(req:Request, res:Response) => {
-  const { username, password } = req.body;
+  const { user_name, password } = req.body;
   try {
-    if(!username || !password) {
+    if(!user_name || !password) {
       return res.status(400).json({ message: "Username and password are required" });
     }
 
-    const user = await authController.login({user_name:username, password})
+    const user = await authController.login({user_name, password})
     res.status(200).json(user)
     
   } catch (error:any) {

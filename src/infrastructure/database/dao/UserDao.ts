@@ -2,7 +2,7 @@ import { AuthUser } from "@/application/DTOs/AuthUser";
 import { AppError } from "@/core/errors/AppError";
 import logger from "@/core/Logger";
 import { IUserRepository } from "@/domain/repositories/IUserRepository";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "@prisma/client";
 
 
 export class UserDao implements IUserRepository {
